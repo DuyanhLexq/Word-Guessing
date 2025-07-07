@@ -318,7 +318,7 @@ class HintFrame:
         else:
             self.scroll_offset_x = 0
 
-    def draw(self, target_surface):
+    def draw(self, target_surface:pygame.Surface):
         """
         Draw hermana frame onto the target surface.
 

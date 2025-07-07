@@ -4,7 +4,7 @@ import io
 import time
 import consts
 import logging
-from GUI.hintFrame import HintFrame
+from GUI.hint import Hint
 from core.logger import log
 # Initialize Pygame
 pygame.init()
@@ -32,23 +32,24 @@ frame_height = int(SCREEN_HEIGHT * 0.7)
 frame_x = int(SCREEN_WIDTH * 0.02)
 frame_y = int(SCREEN_HEIGHT * 0.1)
 
-hint_frame = HintFrame(
-    frame_x, frame_y, frame_width, frame_height,
-    waitImage=consts.HINT_FRAME_LOADING_IMAGE_PATH,
-    fontPath=consts.HINT_FRAME_TEXT_FONT_PATH,
-    fontSize=consts.HINT_FRAME_TEXT_SIZE,
-    fontColor=consts.HINT_FRAME_TEXT_COLOR
-)
 
-# ----- Data List -----
 data_list = [
-    open("test.txt",encoding="utf-8").read()[:5000],
+    open("test.txt",encoding="utf-8").read()[:int(1e3)],
     open(r"C:\Project_Python\applications\Word-Guessing\assets\images\u.png", 'rb').read(),
     "Another string of text here.",
 ]
+newHint = Hint(data_list,frame_x,frame_y,frame_width,frame_height,SCREEN_WIDTH,SCREEN_HEIGHT,
+               waitImage=consts.HINT_FRAME_LOADING_IMAGE_PATH,
+    fontPath=consts.HINT_FRAME_TEXT_FONT_PATH,
+    fontSize=consts.HINT_FRAME_TEXT_SIZE,
+    fontColor=consts.HINT_FRAME_TEXT_COLOR
+               )
 
-hint_frame.data_list = data_list
-hint_frame.preload_all_data()
+# ----- Data List -----
+
+
+newHint.data_list = data_list
+newHint.preload_all_data()
 
 # ----- Forward/Back Buttons -----
 font = pygame.font.SysFont("arial", 24)
@@ -73,33 +74,14 @@ while game_play:
             main_logger.info("Quit event detected")
             game_play = False
         else:
-            hint_frame.handle_event(event)
-
-            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
-                mx, my = event.pos
-                if forward_btn.collidepoint(mx, my):
-                    if hint_frame.current_index < len(data_list) - 1:
-                        hint_frame.current_index += 1
-                        hint_frame.scroll_offset_x = 0
-                        hint_frame.scroll_offset_y = 0
-                        hint_frame.zoom_levels[hint_frame.current_index] = 1.0
-                        hint_frame.adjust_scroll_bars()
-                        hint_frame.logger.info(f"Navigated to next item: index {hint_frame.current_index}")
-                elif back_btn.collidepoint(mx, my):
-                    if hint_frame.current_index > 0:
-                        hint_frame.current_index -= 1
-                        hint_frame.scroll_offset_x = 0
-                        hint_frame.scroll_offset_y = 0
-                        hint_frame.zoom_levels[hint_frame.current_index] = 1.0
-                        hint_frame.adjust_scroll_bars()
-                        hint_frame.logger.info(f"Navigated to previous item: index {hint_frame.current_index}")
+            newHint.handle_event(event)
+            newHint.Hint_handle_event(event)
 
     # Clear the screen
     screen.fill(consts.DEFAULT_BACKGROUND_COLOR)
     # Update and draw the frame
-    hint_frame.update()
-    hint_frame.draw(screen)
-    draw_buttons()
+    newHint.update()
+    newHint.draw(screen)
 
     # Update the display
     pygame.display.update()
