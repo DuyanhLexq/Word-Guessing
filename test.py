@@ -6,6 +6,7 @@ import consts
 import logging
 from GUI.hint import Hint
 from core.logger import log
+from GUI.button import Button
 # Initialize Pygame
 pygame.init()
 
@@ -56,16 +57,7 @@ font = pygame.font.SysFont("arial", 24)
 forward_btn = pygame.Rect(SCREEN_WIDTH - 150, SCREEN_HEIGHT - 60, 120, 40)
 back_btn = pygame.Rect(30, SCREEN_HEIGHT - 60, 120, 40)
 
-def draw_buttons():
-    """
-    Draw the forward and back navigation buttons.
-    """
-    pygame.draw.rect(screen, (0, 100, 255), forward_btn, border_radius=8)  # Blue forward button
-    pygame.draw.rect(screen, (0, 200, 100), back_btn, border_radius=8)     # Green back button
-    fwd_text = font.render("Forward", True, (255, 255, 255))
-    back_text = font.render("Back", True, (255, 255, 255))
-    screen.blit(fwd_text, (forward_btn.x + 10, forward_btn.y + 5))
-    screen.blit(back_text, (back_btn.x + 25, back_btn.y + 5))
+
 
 # ----- Main Game Loop -----
 while game_play:
@@ -74,8 +66,7 @@ while game_play:
             main_logger.info("Quit event detected")
             game_play = False
         else:
-            newHint.handle_event(event)
-            newHint.Hint_handle_event(event)
+            newHint.handleEvent(event)
 
     # Clear the screen
     screen.fill(consts.DEFAULT_BACKGROUND_COLOR)
