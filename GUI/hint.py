@@ -19,9 +19,24 @@ class Hint(HintFrame):
             fontSize= fontSize,
             fontColor= fontColor
         )
-        self.button_font = pygame.font.SysFont(consts.HINT_BUTTON_FONT, consts.HINT_BUTTON_SIZE)
-        self.forward_btn = Button(consts.HINT_FORWARD_BUTTON_X_PERCENT*screen_width,consts.HINT_FORWARD_BUTTON_Y_PERCENT*screen_height, 120, 40, "Forward", hover= True,borderRadius= 8)
-        self.back_btn = Button(30,screen_height-60, 120, 40, "Back",hover= True,borderRadius= 8)
+        self.button_font = pygame.font.SysFont(consts.HINT_BUTTON_FONT, consts.HINT_BUTTON_TEXT_SIZE)
+        button_width = consts.HINT_BUTTON_WIDTH_PERCENT*screen_width
+        button_height = consts.HINT_BUTTON_HEIGHT_PERCENT*screen_height
+        self.forward_btn = Button(
+            consts.HINT_FORWARD_BUTTON_X_PERCENT*screen_width,      
+            consts.HINT_FORWARD_BUTTON_Y_PERCENT*screen_height,
+            button_width, button_height,
+            consts.HINT_FORWARD_BUTTON_CONTENT,
+            hover= True,
+            borderRadius= consts.HINT_BUTTON_BORDER_RADIUS)
+        
+        self.back_btn = Button(
+            consts.HINT_BACK_BUTTON_X_PERCENT*screen_width,
+            consts.HINT_BACK_BUTTON_Y_PERCENT*screen_height,
+            button_width, button_height,
+            consts.HINT_BACK_BUTTON_CONTENT,
+            hover= True,
+            borderRadius= consts.HINT_BUTTON_BORDER_RADIUS)
     
     def forward_btn_func(self):
         if self.current_index < len(self.data_list) - 1:

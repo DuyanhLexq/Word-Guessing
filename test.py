@@ -7,6 +7,7 @@ import logging
 from GUI.hint import Hint
 from core.logger import log
 from GUI.button import Button
+from GUI.label import Label
 # Initialize Pygame
 pygame.init()
 
@@ -29,13 +30,13 @@ main_logger.info("Game started")
 
 # ----- Initialize HintFrame -----
 frame_width = int(SCREEN_WIDTH * 0.5)
-frame_height = int(SCREEN_HEIGHT * 0.7)
+frame_height = int(SCREEN_HEIGHT * 0.8)
 frame_x = int(SCREEN_WIDTH * 0.02)
-frame_y = int(SCREEN_HEIGHT * 0.1)
+frame_y = int(SCREEN_HEIGHT * 0.05)
 
 
 data_list = [
-    open("test.txt",encoding="utf-8").read()[:int(1e3)],
+    open("test.txt",encoding="utf-8").read(),
     open(r"C:\Project_Python\applications\Word-Guessing\assets\images\u.png", 'rb').read(),
     "Another string of text here.",
 ]
@@ -51,11 +52,9 @@ newHint = Hint(data_list,frame_x,frame_y,frame_width,frame_height,SCREEN_WIDTH,S
 
 newHint.data_list = data_list
 newHint.preload_all_data()
-
-# ----- Forward/Back Buttons -----
-font = pygame.font.SysFont("arial", 24)
-forward_btn = pygame.Rect(SCREEN_WIDTH - 150, SCREEN_HEIGHT - 60, 120, 40)
-back_btn = pygame.Rect(30, SCREEN_HEIGHT - 60, 120, 40)
+x,y = consts.LEVEL_LABLE_X_PERCENT *SCREEN_WIDTH,consts.LEVEL_LABLE_Y_PERCENT*SCREEN_HEIGHT
+size = [consts.LEVEL_LABEL_WIDTH_PERCENT*SCREEN_WIDTH, consts.LEVEL_LABEL_HEIGHT_PERCENT*SCREEN_HEIGHT]
+modelabel = Label(x,y,*size,content=f"{consts.LEVEL_LABLE_CONTENT} {consts.LEVEL_TEXTS[2]}",font= consts.HINT_FRAME_TEXT_FONT_PATH,borderRadius= 8,bgColor= consts.LEVEL_LABEL_BG_COLOR)
 
 
 
@@ -73,6 +72,8 @@ while game_play:
     # Update and draw the frame
     newHint.update()
     newHint.draw(screen)
+    modelabel.draw(screen)
+
 
     # Update the display
     pygame.display.update()
